@@ -13,28 +13,29 @@ class DishDetailComponent extends Component {
     renderDish(dish){
         if(dish!=null){
             return(
-                <div className="row">
-                <div className="col-12 col-md-5 m-1">
-                <Card>
-                   <CardImg width="100%"src={dish.image} alt={dish.name}/>
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
+                <div className="container">
+                    <div className="row">
+                       <div className="col-12 col-md-5 m-1">
+                            <Card>
+                                <CardImg width="100%"src={dish.image} alt={dish.name}/>
+                                <CardBody>
+                                    <CardTitle>{dish.name}</CardTitle>
+                                    <CardText>{dish.description}</CardText>
+                                </CardBody>
+                            </Card>
                 
-                </div>
-            
-                    <div className="col-12 col-md-5 m-1">
-                <Card>
-                <h4>Comments</h4>
-                <ListGroup className="list-unstyled">
-                    {this.renderComment(dish.comments)}
-                </ListGroup>
+                        </div>
                 
-                </Card>
-            
-                </div>
+                        <div className="col-12 col-md-5 m-1">
+                            <Card>
+                                <h4>Comments</h4>
+                                <ListGroup className="list-unstyled">
+                                    {this.renderComment(dish.comments)}
+                                </ListGroup>
+                
+                            </Card>
+                        </div>
+                    </div>
                 </div>                
             );
         }
@@ -47,17 +48,14 @@ class DishDetailComponent extends Component {
     
    renderComment(comments){
       
-    var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    
         const COM = comments.map((K)=>{
-            var mydate = new Date(K.date);
-            var m = month[mydate.getMonth()];
-            var d = mydate.getDate();
-            var str = m + ' ' + d + "," + mydate.getFullYear();       
+          
+            ;       
         return(
             <ListGroupItem>
                 <p>{K.comment}</p>
-                <p>--{K.author},{str}</p>
+                <p>--{K.author},{new Intl.DateTimeFormat('en-US', {year: 'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(K.date)))}</p>
             </ListGroupItem>
         );
        });
