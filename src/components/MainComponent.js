@@ -19,6 +19,7 @@ class MainComponent extends Component{
     this.setState({
         selectedDish:dishId
     }); 
+    
     }  
   render(){
     return (
