@@ -1,6 +1,6 @@
 import React from 'react'
-import { Media, Card, CardImg, CardImgOverlay, CardTitle, CardText, CardBody, ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText} from 'reactstrap'
-
+import {  Card, CardImg,  CardTitle, CardText, CardBody, ListGroup, ListGroupItem, Breadcrumb,BreadcrumbItem} from 'reactstrap'
+import {Link} from 'react-router-dom';
 function RenderComment({comments}){
       
     const COM = comments.map((K)=>{
@@ -64,14 +64,27 @@ function RenderDish({dish}){
 
     
     
-    const DishDetailComponent = (props)=> {
-        if(props.selectedDish!=null){
+    const DishDetailComponent = ({dish,comments})=> {
+        if(dish!=null){
         // console.log(Comments);
         return( 
         <div className="container">
+             <Breadcrumb>
+                        
+                        <BreadcrumbItem>
+                            <Link to="/menu">Menu</Link>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem active>
+                            {dish.name}
+                        </BreadcrumbItem>
+            </Breadcrumb>
+            <div className="col-12">
+                        <h3>{dish.name}</h3>
+                        <hr />
+                    </div>
             <div className="row">
-                <RenderDish dish={props.selectedDish} /> 
-                <RenderComment comments={props.selectedDish.comments} />
+                <RenderDish dish={dish} /> 
+                <RenderComment comments={comments} />
             </div>
         </div>
         );
