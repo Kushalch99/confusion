@@ -11,7 +11,6 @@ const minLength = (len) => (val) => (val) && (val.length >= len);
 class CommentForm extends Component {
     constructor(props) {
         super(props)
-    
         this.state = {
              isOpen:false
         }
@@ -23,11 +22,11 @@ class CommentForm extends Component {
         })
     }
     handleSubmit(values){
-        console.log("Current state is" + JSON.stringify(values));
-        alert("Current state is" + JSON.stringify(values));
+        
         this.setState({
             isOpen:!this.state.isOpen
         })
+        this.props.addComment(this.props.dishId,values.rating,values.name,values.comment);
     }
     
     render() {
@@ -86,7 +85,7 @@ class CommentForm extends Component {
 }
 
 
-function RenderComment({comments}){
+function RenderComment({comments,addComment,dishId}){
       
     const COM = comments.map((K)=>{
          
@@ -108,7 +107,7 @@ function RenderComment({comments}){
                     <ListGroup className="list-unstyled">
                         {COM}
                     </ListGroup>
-                    <CommentForm />
+                    <CommentForm dishId={dishId} addComment={addComment}/>
                 </Card>
             </div>
             );
@@ -150,7 +149,7 @@ function RenderDish({dish}){
 
     
     
-    const DishDetailComponent = ({dish,comments})=> {
+    const DishDetailComponent = ({dish,comments,addComment})=> {
         if(dish!=null){
         // console.log(Comments);
         return( 
@@ -170,7 +169,9 @@ function RenderDish({dish}){
                     </div>
             <div className="row">
                 <RenderDish dish={dish} /> 
-                <RenderComment comments={comments} />
+                <RenderComment comments={comments} 
+                    addComment={addComment}
+                    dishId={dish.id}/>
             </div>
         </div>
         );
