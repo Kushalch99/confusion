@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {Modal,Button,Row,Label,Col} from 'reactstrap';
 import {Control,LocalForm,Errors} from 'react-redux-form';
 import {Loading} from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl'
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -126,7 +127,7 @@ function RenderDish({dish}){
                     
                        <div className="col-12 col-md-5 m-1">
                             <Card>
-                                <CardImg width="100%"src={dish.image} alt={dish.name}/>
+                                <CardImg width="100%"src={baseUrl + dish.image} alt={dish.name}/>
                                 <CardBody>
                                     <CardTitle>{dish.name}</CardTitle>
                                     <CardText>{dish.description}</CardText>
@@ -150,8 +151,8 @@ function RenderDish({dish}){
 
     
     
-    const DishDetailComponent = ({dish,isLoading,ErrMess,comments,addComment})=> {
-        if(isLoading){
+    const DishDetailComponent = (props)=> {
+        if(props.isLoading){
             return(
                 <div className="container">
                     <div className="Row">
@@ -160,16 +161,16 @@ function RenderDish({dish}){
                 </div>
             );
         }
-        else if(ErrMess){
+        else if(props.ErrMess){
             return(
                 <div className="container">
                     <div className="Row">
-                        <h4>{ErrMess}</h4>
+                        <h4>{props.ErrMess}</h4>
                     </div>
                 </div>
             );
         }
-        else if(dish!=null){
+        else if(props.dish!=null){
         // console.log(Comments);
         return( 
         <div className="container">
@@ -179,18 +180,18 @@ function RenderDish({dish}){
                             <Link to="/menu">Menu</Link>
                         </BreadcrumbItem>
                         <BreadcrumbItem active>
-                            {dish.name}
+                            {props.dish.name}
                         </BreadcrumbItem>
             </Breadcrumb>
             <div className="col-12">
-                        <h3>{dish.name}</h3>
+                        <h3>{props.dish.name}</h3>
                         <hr />
                     </div>
             <div className="row">
-                <RenderDish dish={dish} /> 
-                <RenderComment comments={comments} 
-                    addComment={addComment}
-                    dishId={dish.id}/>
+                <RenderDish dish={props.dish} /> 
+                <RenderComment comments={props.comments} 
+                    addComment={props.addComment}
+                    dishId={props.dish.id}/>
             </div>
         </div>
         );
