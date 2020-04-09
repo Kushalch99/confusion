@@ -3,6 +3,7 @@ import {  Card, CardImg,  CardTitle, CardText, CardBody, ListGroup, ListGroupIte
 import {Link} from 'react-router-dom';
 import {Modal,Button,Row,Label,Col} from 'reactstrap';
 import {Control,LocalForm,Errors} from 'react-redux-form';
+import {Loading} from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -149,8 +150,26 @@ function RenderDish({dish}){
 
     
     
-    const DishDetailComponent = ({dish,comments,addComment})=> {
-        if(dish!=null){
+    const DishDetailComponent = ({dish,isLoading,ErrMess,comments,addComment})=> {
+        if(isLoading){
+            return(
+                <div className="container">
+                    <div className="Row">
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if(ErrMess){
+            return(
+                <div className="container">
+                    <div className="Row">
+                        <h4>{ErrMess}</h4>
+                    </div>
+                </div>
+            );
+        }
+        else if(dish!=null){
         // console.log(Comments);
         return( 
         <div className="container">
