@@ -5,7 +5,7 @@ import {Modal,Button,Row,Label,Col} from 'reactstrap';
 import {Control,LocalForm,Errors} from 'react-redux-form';
 import {Loading} from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl'
-
+import { FadeTransform, Fade ,Stagger } from 'react-animation-components';
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => (val) && (val.length >= len);
@@ -93,10 +93,12 @@ function RenderComment({comments,postComment,dishId}){
          
                   
        return(
+           <Fade in>
            <ListGroupItem>
                <p>{K.comment}</p>
                <p>--{K.author},{new Intl.DateTimeFormat('en-US', {year: 'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(K.date)))}</p>
            </ListGroupItem>
+           </Fade>
        );
       });
 
@@ -107,7 +109,9 @@ function RenderComment({comments,postComment,dishId}){
                 <Card>
                     <h4>Comments</h4>
                     <ListGroup className="list-unstyled">
+                        <Stagger in>
                         {COM}
+                        </Stagger>
                     </ListGroup>
                     <CommentForm dishId={dishId} postComment={postComment}/>
                 </Card>
@@ -126,6 +130,10 @@ function RenderDish({dish}){
             
                     
                        <div className="col-12 col-md-5 m-1">
+                        <FadeTransform in 
+                            transformProps={{
+                                exitTransform: 'scale(0.5) translateY(-50%)'
+                                }}>
                             <Card>
                                 <CardImg width="100%"src={baseUrl + dish.image} alt={dish.name}/>
                                 <CardBody>
@@ -133,7 +141,7 @@ function RenderDish({dish}){
                                     <CardText>{dish.description}</CardText>
                                 </CardBody>
                             </Card>
-                
+                        </FadeTransform>
                         </div>
                 
                        
