@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { postComment,fetchDishes,fetchComments,fetchPromos } from '../Redux/ActionCreators'
 import { comment } from '../Redux/comment';
 import {actions} from 'react-redux-form';
+import {TransitionGroup,CSSTransition} from 'react-transition-group'
 
 const mapStateToProps = (state) =>{
   return {
@@ -68,6 +69,8 @@ class MainComponent extends Component{
     return (
     <div >
       <HeaderComponent />
+      <TransitionGroup>
+        <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
       <Switch>
             <Route path="/home" component={HomePage} />
             <Route exact path="/menu" component={()=> <Menu dishes={this.props.dishes}/>} />
@@ -76,6 +79,8 @@ class MainComponent extends Component{
             <Route path="/aboutus"><AboutComponent  leaders={this.props.leaders}/></Route>
             <Redirect to="/home/" />    
       </Switch>
+      </CSSTransition> 
+      </TransitionGroup>
       {/* <MenuComponent dishes={this.state.dishes} onClick={(dishId)=> {this.onDishSelect(dishId)}}/> */}
       {/* <DishDetailComponent selectedDish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} /> */}
       <FooterComponent />  
